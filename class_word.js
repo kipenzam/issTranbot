@@ -7,13 +7,19 @@ class Word {
 			VB_imperative VB_and/or VB_only VB_can VB_must
 	*/
 	constructor (english, pumsa, korean, status) {
-		if (english == 'issue') console.log(english, pumsa, korean, status)
 		this.english = english;
 			if (pumsa != 'NNP') { this.english = english.toLowerCase(); }
 		this.pumsa = pumsa;
 		this.dictionary = {};
 		this.dictionary[pumsa] = korean;
-		this.korean = this.dictionary[pumsa] || '';
+			if (/^VB[DGPZ]?$/.test(this.pumsa)) {
+				this.dictionary['VB'] =
+				this.dictionary['VBD'] =
+				this.dictionary['VBG'] =
+				this.dictionary['VBP'] =
+				this.dictionary['VBZ'] = korean;
+			}
+		this.korean = korean;
 		this.status = [];
 			if (status) {
 				// console.log(korean, status)
@@ -25,6 +31,10 @@ class Word {
 	get en () { return this.english; }
 
 	get pos () { return this.pumsa; }
+	set pos (p) { 
+		this.pumsa = p;
+		this.korean = this.dictionary[p] || '';
+	}
 
 	have_state (state) { return this.status.some(s => s == state); }
 	get ko () { 
@@ -35,7 +45,7 @@ class Word {
 			if (this.have_state('if')) {
 				this.korean += '하면';
 			}
-			else if (this.have_state('imperative')) {
+			else if (this.have_state('imperative') && !this.korean.endsWith('하십시오.')) {
 				this.korean += '하십시오.';
 			}
 			else if (this.have_state('once')) {

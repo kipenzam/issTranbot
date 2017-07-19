@@ -107,6 +107,7 @@ let K = {
 	    return [arr, affected];
 	},
 	combine: function combine (sub, arr, i, num, pumsa, ko, name) {
+		console.log(name + ': ' + ko)
 	    let j, kor, en = sub[0].en;
 	    if (!ko) {
 	        kor = sub[0].ko; if (!kor) console.log(sub);
@@ -137,13 +138,15 @@ let K = {
 	        let r = [];
 	        for (var i = 1; i < bools.length; i++) {
 	            r.push( [sub[i].en, sub[i].pumsa, sub[i].ko].join('|') );
-	            r.push(bools[i]);
+	            r.push(!!bools[i]);
 	        }
 	        console.log([name, ':', index, sub[0].toString()].join(' '), r);
 	    }
 	},
 	log_brief: function log_brief (sub, index, bools, name) {
-	    if (bools[0]) { console.log([name, ':', index, sub[0].toString()].join(' '), bools); }
+	    // if (bools[0]) { 
+	    	console.log([name, ':', index, sub[0].toString()].join(' '), bools); 
+	    // }
 	},
 
 

@@ -62,6 +62,7 @@ const pipeline = [
     'VBNN__start_with',
     'VBNN__VB_NN_RB',
     'VBNN__VB_NN',
+    'VBNN__VBNN_RB_Clause_RB_Clause',
     'VBNN__VBNN_RB_Clause',
     'VBNN__RB_Clause_VBNN',
     'VBNN__VBNN_that_VBNN',
@@ -72,6 +73,7 @@ const pipeline = [
     'parenthesis',
     'Sentence__a_allows_you_to',
     'Sentence__you_will_learn_to',
+    'Sentence__you_should_see',
     'Sentence__has',
     'Sentence__has_not',
     'Sentence__make_something_JJ',
@@ -200,7 +202,7 @@ function get_ko (o) {
     else if (map[en.toLowerCase()]) out = map[en.toLowerCase()];
     else                            out = new Word(en, pumsa, '');
 
-    out.pumsa = pumsa;
+    out.pos = pumsa;
     return out;
 }
 
@@ -226,7 +228,7 @@ function pipe (array, pipeline, functions, line) {
     return final(out, line);
 }
 function affected (affected) {
-    return affected.map(o => o.ko + o.status.join(', ') + '_' + o.pumsa);
+    return affected.map(o => o.toString() + o.status.join(', '));
 }
     function select (array) {
         let out = array, trial;

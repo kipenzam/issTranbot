@@ -2,6 +2,14 @@
 
 
 const functions = {
+    'Sentence__you_should_see': function Sentence__you_should_see (arr) {
+        let name = 'Sentence__you_should_see', affected = [];
+        function tests (sub) { return [
+            sub.a.en == 'you', sub.b.en = 'should', sub.c.en = 'see', sub.d.isNN()
+        ]; }
+        function ko (sub) { return sub.ko(3, '가', '보일 겁니다.'); }
+        return K.loop(arr, affected, tests, 3, 'Sentence', ko, name);
+    },
     'Sentence__a_allows_you_to': function Sentence__a_allows_you_to (arr) {
         let name = 'Sentence__a_allows_you_to', affected = [];
         function tests (sub) { return [
@@ -41,7 +49,7 @@ const functions = {
         function tests (sub) { return [
             K.r.use.test(sub.a.en), sub.b.isNN(), sub.c.en == 'to', sub.d.isVB(), sub.e.isNN()
         ]; }
-        function ko (sub) { return sub.ko(1, '_0', ' 써서', 4, '_3', 3); }
+        function ko (sub) { return sub.ko(1, '_0', '써서', 4, '_3', 3); }
         return K.loop(arr, affected, tests, 4, 'VBNN', ko, name);
     },
     'NN__chapter_d': function NN__chapter_d (arr) {
@@ -117,7 +125,7 @@ const functions = {
         function tests (sub) { return [
             sub.a.pos == 'DT', sub.b.isNN()
         ]; }
-        return K.loop(arr, affected, tests, 1, 1, ko, name, 2);
+        return K.loop(arr, affected, tests, 1, 1, ko, name);
     },
     'NNS__CD_NN': function NNS__CD_NN (arr) {
         let name = 'NNS__CD_NN', affected = [];
@@ -185,7 +193,7 @@ const functions = {
             if (sub.a.en == 'entire') { out = sub.ko(1, 0); }
             return out;
         }
-        return K.loop_r(arr, affected, tests, 1, 1, ko, name);
+        return K.loop_r(arr, affected, tests, 1, 1, ko, name, 2);
     },
     'NN__NN_called_NN': function NN__NN_called_NN (arr) {
         let name = 'NN__NN_called_NN', affected = [];
@@ -440,7 +448,15 @@ const functions = {
             sub.a.isVB(), sub.b.isNN(),
         ]; }
         function ko (sub) { return sub.ko(1, '_0', 0); }
-        return K.loop(arr, affected, tests, 1, 'VBNN', ko, name, 2);
+        return K.loop(arr, affected, tests, 1, 'VBNN', ko, name);
+    },
+    'VBNN__VBNN_RB_Clause_RB_Clause': function VBNN__VBNN_RB_Clause_RB_Clause (arr) {
+        let name = 'VBNN__VBNN_RB_Clause_RB_Clause', affected = [];
+        function tests (sub) { return [
+            sub.a.isVBNN(), sub.b.isRB_Clause(), sub.c.isRB_Clause()
+        ]; }
+        function ko (sub) { return sub.ko(2, 1, 0); }
+        return K.loop(arr, affected, tests, 2, 'VBNN', ko, name);
     },
     'VBNN__VBNN_RB_Clause': function VBNN__VBNN_RB_Clause (arr) {
         let name = 'VBNN__VBNN_RB_Clause', affected = [];
